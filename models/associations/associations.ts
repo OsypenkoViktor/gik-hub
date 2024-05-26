@@ -6,6 +6,7 @@ import PublicationLike from "@/models/publicationLike";
 import User from "@/models/User";
 import ForumTag from "@/models/forumtag";
 import ForumTheme from "@/models/forumtheme";
+import Role from "@/models/Role";
 
 PublicationTag.belongsToMany(Publication, {
   through: "Publications_PublicationsTags",
@@ -28,6 +29,9 @@ ForumTheme.belongsTo(ForumTag);
 ForumTheme.hasMany(ForumPost);
 ForumPost.belongsTo(ForumTheme);
 
+User.belongsToMany(Role, { through: "UserRoles" });
+Role.belongsToMany(User, { through: "UserRoles" });
+
 export {
   Publication,
   PublicationTag,
@@ -36,4 +40,6 @@ export {
   ForumTag,
   ForumTheme,
   PublicationLike,
+  User,
+  Role,
 };

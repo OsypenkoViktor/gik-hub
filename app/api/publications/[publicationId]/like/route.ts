@@ -69,7 +69,7 @@ export async function GET(
     }
   } catch (error) {
     return NextResponse.json(
-      { message: "server error", error: error },
+      { message: "Не вдалося оновити інформацію про лайк", error: error },
       { status: 500 }
     );
   }

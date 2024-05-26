@@ -23,10 +23,7 @@ export const authOptions: NextAuthOptions = {
             credentials.password,
             userAuth.dataValues.password
           );
-
           if (result) {
-            console.log("!!!!!!!!!!!!!!!!!!" + userAuth.dataValues.id);
-
             return {
               id: userAuth.dataValues.id,
               name: userAuth.dataValues.username,
@@ -49,10 +46,10 @@ export const authOptions: NextAuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async signIn({user, account, profile}) {
+    async signIn({ user, account, profile }) {
       return true;
     },
-    async redirect({url,baseUrl}) {
+    async redirect({ url, baseUrl }) {
       return baseUrl;
     },
     async session({ session, token }) {

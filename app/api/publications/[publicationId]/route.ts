@@ -18,7 +18,7 @@ export async function GET(
     console.log(error);
 
     return NextResponse.json(
-      { message: "помилка при отриманні публікації", error: error },
+      { message: "Помилка при отриманні публікації", error: error },
       { status: 500 }
     );
   }

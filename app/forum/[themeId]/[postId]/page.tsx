@@ -1,7 +1,7 @@
 "use client";
 import { Post } from "@/components/ForumPage/ThemesList";
 import React, { useEffect, useState } from "react";
-import { Button, Typography } from "antd";
+import { Button } from "antd";
 import PostDisplay from "@/components/PostPage/PostDisplay";
 import TextEditor from "@/components/NewPostPage/TextEditor";
 import { useSession } from "next-auth/react";
@@ -67,7 +67,11 @@ const PostPage = ({
             Коментувати
           </Button>
         </>
-      ):<div className="text-white text-center text-xl">Для коментування необхідно авторизуватися.</div>}
+      ) : (
+        <div className="text-white text-center text-xl">
+          Для коментування необхідно авторизуватися.
+        </div>
+      )}
 
       <PostComments comments={postComments} />
     </div>
