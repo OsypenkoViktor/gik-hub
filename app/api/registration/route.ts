@@ -11,10 +11,9 @@ export async function POST(req: Request) {
   Role.belongsToMany(User, { through: "UserRoles" });
   const transaction = await sequelize.transaction();
   try {
-    const hash = await bcrypt.hash(password, 10); // Хеширование пароля
+    const hash = await bcrypt.hash(password, 10); 
 
     const newUser = await User.create({
-      // Создание нового пользователя
       username: username,
       password: hash,
       email: email,
@@ -26,19 +25,18 @@ export async function POST(req: Request) {
 
     await newUser.addRole(role);
     await transaction.commit();
-    return NextResponse.json({ message: newUser }); // Ответ при успешном создании пользователя
+    return NextResponse.json({ message: newUser });
   } catch (error: any) {
     if (transaction) await transaction.rollback();
     if (error.name === "SequelizeUniqueConstraintError") {
-      console.error("Ошибка: Пользователь с таким именем уже существует");
       return NextResponse.json(
-        { message: "Ошибка: Пользователь с таким именем уже существует" },
+        { message: "Користувач з таким логіном або поштою вже існує" },
         { status: 405 }
       );
     } else {
-      console.error("Ошибка при создании пользователя:", error);
       return NextResponse.json(
-        { message: "Ошибка при создании пользователя" },
+        { message: "Помилка при створенні користувача",error
+         },
         { status: 500 }
       );
     }

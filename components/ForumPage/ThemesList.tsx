@@ -52,7 +52,7 @@ const ThemesList = ({ themeID }: { themeID: number | null }) => {
     return (
       <div className="text-white w-[70%] h-full flex flex-col items-center">
         {posts?.map((post) => (
-          <PostCard key={post.id} post={post} />
+          <PostCard key={post.id} post={post} themeId={themeID}  />
         ))}
       </div>
     );

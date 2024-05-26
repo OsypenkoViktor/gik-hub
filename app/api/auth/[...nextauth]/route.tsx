@@ -49,12 +49,12 @@ export const authOptions: NextAuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-
-    //Фікс багу next-auth в jwt callback?
-    /*     async jwt({ token, user, profile }) {
-      console.log(profile);
-      return token;
-    }, */
+    async signIn({user, account, profile}) {
+      return true;
+    },
+    async redirect({url,baseUrl}) {
+      return baseUrl;
+    },
     async session({ session, token }) {
       return {
         ...session,

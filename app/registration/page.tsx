@@ -1,16 +1,43 @@
 "use client";
-import { FormEvent } from "react";
+import { FormEvent, use, useState } from "react";
 import { useRouter } from "next/navigation";
+import * as Yup from "yup";
 
 export default function RegistrationForm() {
   const router = useRouter();
+  const [validationError, setValidationError] = useState({
+    username: "",
+    password: "",
+    email: "",
+  });
+  const [responseError, setResponseError] = useState("");
+
+  const validate = async (name, value) => {
+    try {
+      await validationSchema.validateAt(name, { [name]: value });
+      setValidationError((prevErrors) => ({ ...prevErrors, [name]: "" }));
+      return true;
+    } catch (error) {
+      setValidationError((prevErrors) => ({
+        ...prevErrors,
+        [name]: error.message,
+      }));
+      return false;
+    }
+  };
+
   async function onSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
+
     const formData = new FormData(event.currentTarget);
     const username = formData.get("username");
     const password = formData.get("password");
     const email = formData.get("email");
-    console.log(password);
+    const isValidData =
+      (await validate("username", username)) &&
+      (await validate("password", password)) &&
+      (await validate("email", email));
+    if (!isValidData) return;
 
     const response = await fetch("/api/registration", {
       headers: {
@@ -27,8 +54,15 @@ export default function RegistrationForm() {
     if (response.ok) {
       router.push("/signin");
     } else {
-      const data = await response.body;
-      console.log(response);
+      try {
+        const errorResponse = await response.json();
+        const message = errorResponse.message;
+        setResponseError(message);
+      } catch (error) {
+        setResponseError(
+          "Помилка при спробі реєстрації. Перевірте введені данні, оновіть сторінку і стробуйте ще раз"
+        );
+      }
     }
   }
 
@@ -46,6 +80,9 @@ export default function RegistrationForm() {
             name="username"
             placeholder="Username"
           />
+          <p className="text-red-500 text-xs italic">
+            {validationError.username}
+          </p>
         </div>
         <div className="mb-6">
           <label className="block  text-sm font-bold mb-2" htmlFor="password">
@@ -59,7 +96,7 @@ export default function RegistrationForm() {
             placeholder="******************"
           />
           <p className="text-red-500 text-xs italic">
-            Please choose a password.
+            {validationError.password}
           </p>
         </div>
         <div className="mb-6">
@@ -73,9 +110,10 @@ export default function RegistrationForm() {
             type="email"
             placeholder="******************"
           />
-          <p className="text-red-500 text-xs italic">Enter email</p>
+          <p className="text-red-500 text-xs italic">{validationError.email}</p>
         </div>
         <div className="flex items-center justify-between">
+        <p className="text-red-500 text-xs italic">{responseError}</p>
           <button
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             type="submit"
@@ -87,3 +125,22 @@ export default function RegistrationForm() {
     </div>
   );
 }
+
+const noSpaces = (value) => {
+  return !/\s/.test(value);
+};
+
+const validationSchema = Yup.object({
+  username: Yup.string()
+    .required("Логін не може бути пустим.")
+    .min(3, "Мінімум 3 символи")
+    .max(20, "Максимум 20 символів"),
+  password: Yup.string()
+    .required("Введіть свій пароль")
+    .min(8, "Пароль не може бути менше 8 символів")
+    .max(20, "Пароль не може бути довше 20 символів")
+    .test("no-spaces", "Пароль не може містити пробіли.", noSpaces),
+  email: Yup.string()
+    .required("Введіть елетронну пошту")
+    .email("Перевірте валідність введеної поштової адреси"),
+});

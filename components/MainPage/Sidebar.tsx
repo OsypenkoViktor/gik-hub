@@ -5,7 +5,7 @@ const Sidebar = () => {
     <div className="hidden lg:flex justify-center w-[35%] h-full bg-black text-white p-3">
       <ul className="space-y-4">
         <li>
-          <MyLink size="default" href="/" title="Публікації" />
+          <MyLink size="default" href="/publications" title="Публікації" />
         </li>
         <li>
           <MyLink size="default" href="/forum" title="Форум" />

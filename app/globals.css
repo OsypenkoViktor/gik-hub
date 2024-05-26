@@ -31,12 +31,44 @@ pre {
     display: block;
     word-wrap: break-word;
 }
+.post h1 {
+    font-size: 30px;
+}
+
+.post h2 {
+    font-size: 25px;
+}
+
+.post ol {
+    list-style-type: decimal;
+    color: green;
+}
+.post ul {
+    list-style-type: circle;
+    color: green;
+}
+
 
 .ql-editor img {
     width: 400px;
-    /* Максимальная ширина изображений равна ширине контейнера редактора */
-    /* Автоматическая высота для сохранения пропорций */
+
 }
 .ql-editor{
 font-size: 18px;
+color: white !important;
+}
+
+.ql-toolbar .ql-stroke {
+    fill: none;
+    stroke: #fff !important;
+}
+
+.ql-active .ql-stroke {
+    fill: none;
+    stroke: red !important;
+  }
+
+.ql-toolbar .ql-fill {
+    fill: #fff !important;
+    stroke: none;
 }

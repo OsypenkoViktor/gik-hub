@@ -1,6 +1,7 @@
 const { DataTypes } = require("sequelize");
 import sequelize from "@/database/dbInit";
 
+
 const ForumPost = sequelize.define("ForumPost", {
   title: {
     type: DataTypes.STRING,
@@ -12,7 +13,7 @@ const ForumPost = sequelize.define("ForumPost", {
     allowNull: false,
   },
   text: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: false,
   },
   forumThemeId: {

@@ -23,7 +23,7 @@ const TextEditor: React.FC<{
 
   return (
     <div>
-      <div className="h-[500px] w-screen mb-4 bg-white overflow-auto">
+      <div className="max-h-[400px] w-full mb-4 bg-gray-900 overflow-auto">
         <ReactQuill
           theme="snow"
           value={value}

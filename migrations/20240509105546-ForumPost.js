@@ -30,7 +30,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      themeId: {
+      ForumThemeId: {
         allowNull: false,
         type: Sequelize.INTEGER,
       },

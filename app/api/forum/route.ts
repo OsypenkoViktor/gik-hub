@@ -1,15 +1,18 @@
 import { NextResponse } from "next/server";
-import sequelize from "@/database/dbInit";
-import ForumTag from "@/models/forumtag";
-import ForumTheme from "@/models/forumtheme";
-const bcrypt = require("bcrypt");
-import { hashPassword } from "@/helpers/hashGenerator";
+import {ForumTag, ForumTheme} from "@/models/associations/associations"
+
 
 export async function GET(req: Request) {
-  ForumTag.hasMany(ForumTheme);
-  ForumTheme.belongsTo(ForumTag);
-  const data = await ForumTag.findAll({
-    include: ForumTheme,
-  });
-  return NextResponse.json(data);
+  try {
+   
+    const data = await ForumTag.findAll({
+      include: ForumTheme,
+    });
+    return NextResponse.json(data);
+  } catch (error) {
+    return NextResponse.json(
+      { message: "Не вдалося отримати данні", error: { error } },
+      { status: 500 }
+    );
+  }
 }
