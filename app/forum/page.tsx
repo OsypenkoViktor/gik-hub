@@ -2,7 +2,7 @@
 import ThemesList from "@/components/ForumPage/ThemesList";
 import type { TreeDataNode } from "antd";
 import { Button, Tree } from "antd";
-import { Suspense, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
 //типи відповіді серверу

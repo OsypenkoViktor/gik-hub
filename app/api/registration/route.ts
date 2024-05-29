@@ -3,7 +3,6 @@ import sequelize from "@/database/dbInit";
 import { User, Role } from "@/models/associations/associations";
 
 const bcrypt = require("bcrypt");
-import { hashPassword } from "@/helpers/hashGenerator";
 
 export async function POST(req: Request) {
   const { username, password, email } = await req.json();

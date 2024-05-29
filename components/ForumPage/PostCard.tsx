@@ -1,15 +1,14 @@
 import React from "react";
 import type { Post } from "./ThemesList";
-import Link from 'next/link'
+import Link from "next/link";
 
 type PostCardProps = {
-  post:Post,
-  themeId:number
-}
+  post: Post;
+  themeId: number;
+};
 
-const PostCard:React.FC<PostCardProps> = ({ post,themeId }) => {
+const PostCard: React.FC<PostCardProps> = ({ post, themeId }) => {
   const createdAt = new Date(post.createdAt);
-  const prewiev = post.text.slice(0, 30);
   return (
     <div className="w-[95%] text-white p-4 border m-2 border-white">
       <p className="p-2">
